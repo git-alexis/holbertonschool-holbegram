@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
-import '../widgets/text_field.dart';
-import 'signup_screen.dart';
-import '../methods/auth_methods.dart';
+import '../../widgets/text_field.dart';
+import 'login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpState extends State<SignUp> {
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passwordConfirmController = TextEditingController();
 
   bool _passwordVisible = true;
 
   @override
   void dispose() {
     emailController.dispose();
+    usernameController.dispose();
     passwordController.dispose();
+    passwordConfirmController.dispose();
     super.dispose();
   }
 
@@ -50,6 +53,8 @@ class _LoginScreenState extends State<LoginScreen> {
               width: 80,
               height: 60,
             ),
+            const SizedBox(height: 32),
+            const Text("Sign up to see photos and videos from your friends."),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
@@ -63,9 +68,33 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 24),
                   TextFieldInput(
+                    controller: usernameController,
+                    ispassword: false,
+                    hintText: "Full Name",
+                    keyboardType: TextInputType.text,
+                  ),
+                  const SizedBox(height: 24),
+                  TextFieldInput(
                     controller: passwordController,
                     ispassword: !_passwordVisible,
                     hintText: "Password",
+                    keyboardType: TextInputType.visiblePassword,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  TextFieldInput(
+                    controller: passwordConfirmController,
+                    ispassword: !_passwordVisible,
+                    hintText: "Confirm Password",
                     keyboardType: TextInputType.visiblePassword,
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -88,41 +117,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           const Color.fromARGB(218, 226, 37, 24),
                         ),
                       ),
-                      onPressed: () async {
-                        String response = await AuthMethode().login(
-                          email: emailController.text,
-                          password: passwordController.text,
-                        );
-                        if (response == "success") {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Login")),
-                          );
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(response)),
-                          );
-                        }
-                      },
+                      onPressed: () {},
                       child: const Text(
-                        "Log in",
+                        "Sign up",
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Forgot your login details? "),
-                      Text(
-                        "Get help logging in",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Flexible(
-                        flex: 0,
-                        child: Container(),
-                      ),
-                    ],
                   ),
                   const SizedBox(height: 24),
                   const Divider(thickness: 2),
@@ -131,18 +131,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Don't have an account "),
+                        const Text("Have an account? "),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const SignUp(),
+                                builder: (context) => const LoginScreen(),
                               ),
                             );
                           },
                           child: const Text(
-                            "Sign up",
+                            "Log in",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(218, 226, 37, 24),
@@ -151,27 +151,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: const [
-                      Flexible(child: Divider(thickness: 2)),
-                      Text(" OR "),
-                      Flexible(child: Divider(thickness: 2)),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.network(
-                        "https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png",
-                        width: 40,
-                        height: 40,
-                      ),
-                      const Text("Sign in with Google"),
-                    ],
                   ),
                 ],
               ),
