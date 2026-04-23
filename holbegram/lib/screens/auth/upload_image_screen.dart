@@ -96,19 +96,18 @@ class _AddPictureState extends State<AddPicture> {
             ),
             const SizedBox(height: 28),
             CircleAvatar(
-              radius: 100,
+              radius: 120,
               backgroundColor: Colors.transparent,
               backgroundImage: _image != null ? MemoryImage(_image!) : null,
               child: _image == null
                 ? Image.asset(
                   "assets/images/Sample_User_Icon.png",
-                  width: 200,
-                  height: 200,
+                  width: 240,
+                  height: 240,
                 ) : null,
             ),
-            const SizedBox(height: 24),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
                   icon: const Icon(
@@ -118,6 +117,7 @@ class _AddPictureState extends State<AddPicture> {
                   ),
                   onPressed: selectImageFromGallery,
                 ),
+                const SizedBox(width: 120),
                 IconButton(
                   icon: const Icon(
                     Icons.camera_alt_outlined,
