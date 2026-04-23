@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../methods/auth_methods.dart';
 
 class AddPicture extends StatefulWidget {
   final String email;
@@ -136,13 +137,29 @@ class _AddPictureState extends State<AddPicture> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(218, 226, 37, 24),
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  String response = await AuthMethode().signUpUser(
+                    email: widget.email,
+                    username: widget.username,
+                    password: widget.password,
+                    file: _image,
+                  );
+                  if (response == "success") {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("success")),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(response)),
+                    );
+                  }
+                },
                 child: const Text(
                   "Next",
                   style: TextStyle(
-                    color: Colors.white,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
               ),
