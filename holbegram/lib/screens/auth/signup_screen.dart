@@ -53,7 +53,7 @@ class _SignUpState extends State<SignUp> {
               width: 80,
               height: 60,
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 28),
             const Text("Sign up to see photos and videos from your friends."),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
