@@ -108,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Row(
                     children: [
                       CircleAvatar(
-                        radius: 40,
+                        radius: 52,
                         backgroundImage: NetworkImage(userData!['photoUrl']),
                       ),
                       Expanded(
@@ -171,8 +171,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 var snap = snapshot.data!.docs;
                 return MasonryGridView.count(
                   crossAxisCount: 3,
-                  mainAxisSpacing: 4,
-                  crossAxisSpacing: 4,
+                  mainAxisSpacing: 2,
+                  crossAxisSpacing: 6,
                   itemCount: snap.length,
                   itemBuilder: (context, index) {
                     return Image.network(
