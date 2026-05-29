@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../providers/user_provider.dart';
 import '../screens/pages/feed.dart';
-//import '../screens/pages/search.dart';
+import '../screens/pages/search.dart';
 import '../screens/pages/add_image.dart';
 //import '../screens/pages/favorite.dart';
-//import '../screens/pages/profile_screen.dart';
+import '../screens/pages/profile_screen.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -40,12 +41,14 @@ class _BottomNavState extends State<BottomNav> {
     return Scaffold(
       body: PageView(
         controller: _pageController,
-        children: const [
+        children: [
           Feed(),
-          //Search(),
+          Search(),
           AddImage(),
           //Favorite(),
-          //ProfileScreen(),
+          ProfileScreen(
+            uid: FirebaseAuth.instance.currentUser!.uid,
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavyBar(
