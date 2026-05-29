@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/text_field.dart';
 import 'signup_screen.dart';
 import '../../methods/auth_methods.dart';
+import '../home.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,7 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  bool _passwordVisible = true;
+  bool _passwordVisible = false;
 
   @override
   void dispose() {
@@ -26,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    _passwordVisible = true;
+    _passwordVisible = false;
   }
 
   @override
@@ -97,6 +98,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (response == "success") {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text("Login")),
+                          );
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Home(),
+                            ),
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
