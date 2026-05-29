@@ -6,7 +6,7 @@ import '../providers/user_provider.dart';
 import '../screens/pages/feed.dart';
 import '../screens/pages/search.dart';
 import '../screens/pages/add_image.dart';
-//import '../screens/pages/favorite.dart';
+import '../screens/pages/favorite.dart';
 import '../screens/pages/profile_screen.dart';
 
 class BottomNav extends StatefulWidget {
@@ -45,7 +45,7 @@ class _BottomNavState extends State<BottomNav> {
           Feed(),
           Search(),
           AddImage(),
-          //Favorite(),
+          Favorite(),
           ProfileScreen(
             uid: FirebaseAuth.instance.currentUser!.uid,
           ),
@@ -105,7 +105,7 @@ class _BottomNavState extends State<BottomNav> {
           BottomNavyBarItem(
             icon: const Icon(Icons.favorite_border),
             title: const Text(
-              "Likes",
+              "Favorite",
               style: TextStyle(
                 fontSize: 25,
                 fontFamily: 'Billabong',

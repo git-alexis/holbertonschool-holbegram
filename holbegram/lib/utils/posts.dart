@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../screens/pages/methods/post_storage.dart';
 
 class Posts extends StatefulWidget {
@@ -93,14 +94,36 @@ class _PostsState extends State<Posts> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: Row(
-                          children: const [
+                          children: [
                             Icon(Icons.favorite_border),
                             SizedBox(width: 28),
                             Icon(Icons.chat_bubble_outline),
                             SizedBox(width: 28),
                             Icon(Icons.send),
                             Spacer(),
-                            Icon(Icons.bookmark_border),
+                            GestureDetector(
+                              onTap: () async {
+                                DocumentSnapshot userSnap =
+                                    await FirebaseFirestore.instance
+                                        .collection('users')
+                                        .doc(
+                                          FirebaseAuth.instance.currentUser!.uid,
+                                        )
+                                        .get();
+                                List saved = (userSnap.data() as Map<String, dynamic>)['saved'];
+                                await PostStorage().favoritePost(
+                                  data[index]['postId'],
+                                  FirebaseAuth.instance.currentUser!.uid,
+                                  saved,
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Favorite updated"),
+                                  ),
+                                );
+                              },
+                              child: const Icon(Icons.bookmark_border),
+                            ),
                           ],
                         ),
                       ),

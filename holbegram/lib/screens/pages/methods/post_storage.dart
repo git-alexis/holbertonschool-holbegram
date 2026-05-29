@@ -48,4 +48,18 @@ class PostStorage {
   Future<void> deletePost(String postId, String publicId) async {
     await _firestore.collection("posts").doc(postId).delete();
   }
+
+  Future<void> favoritePost(
+    String postId,
+    String uid,
+    List saved,
+  ) async {
+    if (saved.contains(postId)) {
+      await _firestore.collection('users').doc(uid)
+          .update({'saved': FieldValue.arrayRemove([postId])});
+    } else {
+      await _firestore.collection('users').doc(uid)
+          .update({'saved': FieldValue.arrayUnion([postId])});
+    }
+  }
 }
